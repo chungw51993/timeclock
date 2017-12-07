@@ -16,9 +16,11 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  role: {
+    type: String,
+  },
   clockedIn: {
     type: Boolean,
-    required: true,
     default: false,
   },
 });

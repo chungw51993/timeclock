@@ -28,7 +28,7 @@ const middleware = webpackMiddleware(compiler, {
 });
 
 const app = express();
-mongoose.connect('mongodb://localhost/timeclock');
+mongoose.createConnection('mongodb://localhost/timeclock');
 
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
