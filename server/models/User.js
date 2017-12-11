@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
   userId: {
-    type: Number,
+    type: String,
     unique: true,
     required: true,
   },
@@ -16,12 +16,17 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  role: {
-    type: String,
+  admin: {
+    type: Boolean,
+    default: false,
   },
   clockedIn: {
     type: Boolean,
     default: false,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
 });
 

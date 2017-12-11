@@ -13,6 +13,8 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 
 import webpackConfig from './../webpack.config';
 
+import apiRoutes from './routes';
+
 const compiler = webpack(webpackConfig);
 const middleware = webpackMiddleware(compiler, {
   publicPath: webpackConfig.output.publicPath,
@@ -28,13 +30,15 @@ const middleware = webpackMiddleware(compiler, {
 });
 
 const app = express();
-mongoose.createConnection('mongodb://localhost/timeclock');
+mongoose.connect('mongodb://localhost/timeclock', { useMongoClient: true });
 
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(morgan('dev'));
 
 app.use(express.static(path.join(__dirname, '../')));
+
+app.use('/', apiRoutes);
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
 if (isDeveloping) {
