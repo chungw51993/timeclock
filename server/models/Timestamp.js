@@ -9,13 +9,13 @@ const TimestampSchema = new Schema({
     default: Date.now,
   },
   in: {
-    type: Date,
+    type: String,
   },
   out: {
-    type: Date,
+    type: String,
   },
   userId: {
-    type: Schema.Types.ObjectId,
+    type: Schema.Types.String,
     ref: 'User',
   },
 });
