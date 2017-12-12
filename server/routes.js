@@ -11,4 +11,10 @@ router.route('/api/user')
 router.route('/api/user/:userId')
   .get(userController.findUser);
 
+router.route('/api/timestamp/clockin')
+  .post(timestampController.clockin);
+
+router.route('/api/timestamp/clockout')
+  .post(timestampController.clockout);
+
 export default router;

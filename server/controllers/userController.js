@@ -5,7 +5,7 @@ const userController = {};
 userController.findUser = (req, res) => {
   const { userId } = req.params;
 
-  User.find({ userId })
+  User.findOne({ userId })
     .then((user) => {
       return res.status(200).json({
         success: true,
