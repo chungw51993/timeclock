@@ -3,21 +3,21 @@ import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 export default {
-  devtool: 'source-map',
+  context: path.join(__dirname, 'client'),
   entry: [
     'webpack-hot-middleware/client?reload=true/__webpack_hmr',
-    path.join(__dirname, 'client/index.js'),
+    path.join(__dirname, 'client/app.js'),
   ],
   output: {
     path: path.join(__dirname, '/dist/'),
-    filename: 'index.js',
+    filename: 'app.bundle.js',
     publicPath: '/',
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new HtmlWebpackPlugin({
-      template: 'client/index.tpl.html',
+      template: 'index.tpl.html',
       inject: 'body',
       filename: 'index.html',
     }),
@@ -28,12 +28,16 @@ export default {
   module: {
     loaders: [
       {
-        test: /\.js?$/,
+        test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
           presets: ['es2015'],
         },
+      },
+      {
+        test: /\.html$/,
+        loader: 'html-loader',
       },
       {
         test: /\.scss$/,
@@ -45,11 +49,19 @@ export default {
         test: /\.css$/,
         loaders: ['style', 'css'],
       },
+      {
+        test: /\.json$/,
+        loaders: ['json'],
+      },
     ],
     rules: [
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.json$/,
+        use: ['json-loader'],
       },
     ],
   }

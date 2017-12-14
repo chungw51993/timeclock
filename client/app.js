@@ -1,25 +1,11 @@
 import angular from 'angular';
+import uirouter from 'angular-ui-router';
+
+import routing from './app.config';
+import home from './features/home';
 
 angular.module('timeclock', [
-  'ui.router',
+  uirouter,
+  home,
 ])
-
-.config(($stateProvider, $urlRouterProvider, $locationProvider) => {
-  $stateProvider
-    .state('home', {
-      url: '/',
-      templateUrl: '/client/views/home.html',
-      controller: 'HomeCtrl',
-      controllerAs: 'ctrl',
-    })
-    .state('option', {
-      url: '/options',
-      templateUrl: '/client/views/option.html',
-      controller: 'OptionCtrl',
-      controllerAs: 'ctrl',
-    });
-
-  $urlRouterProvider.otherwise('/');
-
-  $locationProvider.html5Mode(true);
-});
+.config(routing);
