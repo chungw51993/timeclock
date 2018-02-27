@@ -44,10 +44,6 @@ const isDeveloping = process.env.NODE_ENV !== 'production';
 if (isDeveloping) {
   app.use(middleware);
   app.use(webpackHotMiddleware(compiler));
-  app.get('*', (req, res) => {
-    res.write(middleware.fileSystem.readFileSync(path.join(__dirname, '../dist/index.html')));
-    res.end();
-  });
 } else {
 // Middleware - In production, force client to use HTTPS via redirect
   app.use((req, res, next) => {

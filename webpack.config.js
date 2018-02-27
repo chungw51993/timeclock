@@ -1,73 +1,47 @@
-import path from 'path';
 import webpack from 'webpack';
+import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 export default {
-  context: path.join(__dirname, 'client'),
+  mode: 'development',
+  devtool: 'source-map',
   entry: [
     'webpack-hot-middleware/client?reload=true/__webpack_hmr',
     path.join(__dirname, 'client/app.js'),
   ],
   output: {
     path: path.join(__dirname, '/dist/'),
-    filename: 'app.bundle.js',
+    filename: 'bundle.js',
     publicPath: '/',
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new HtmlWebpackPlugin({
-      template: 'index.tpl.html',
+      template: 'client/index.tpl.html',
       inject: 'body',
       filename: 'index.html',
     }),
   ],
   resolve: {
-    extensions: ['.js', '.json'],
+    extensions: ['.js'],
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
         loader: 'babel-loader',
-        query: {
-          presets: ['es2015'],
-        },
+        exclude: /node_modules/,
       },
       {
         test: /\.html$/,
-        use: [{
-          loader: 'html-loader',
-          options: {
-            minimize: true,
-          },
-        }]
+        loader: 'html-loader',
       },
       {
         test: /\.scss$/,
-        loaders: ['style', 'css', 'sass'],
-        include: path.join(__dirname, 'client'),
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.css$/,
-        loaders: ['style', 'css'],
-      },
-      {
-        test: /\.json$/,
-        loaders: ['json'],
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
     ],
-    rules: [
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-      },
-      {
-        test: /\.json$/,
-        use: ['json-loader'],
-      },
-    ],
-  }
+  },
 };
